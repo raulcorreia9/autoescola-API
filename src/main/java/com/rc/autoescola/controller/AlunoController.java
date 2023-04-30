@@ -1,13 +1,10 @@
 package com.rc.autoescola.controller;
 
-import com.rc.autoescola.DTO.AlunoDTO;
+import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
-import com.rc.autoescola.exception.ErrorResponseDetails;
-import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.service.AlunoService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,8 +41,8 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> save(@Valid @RequestBody AlunoDTO alunoDTO) {
-        return new ResponseEntity<>(alunoService.save(alunoDTO), HttpStatus.CREATED);
+    public ResponseEntity<Aluno> save(@Valid @RequestBody AlunoCreateDTO alunoCreateDTO) {
+        return new ResponseEntity<>(alunoService.save(alunoCreateDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -56,9 +52,8 @@ public class AlunoController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> update(@RequestBody AlunoUpdateDTO alunoUpdateDTO) {
-        alunoService.update(alunoUpdateDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Aluno> update(@Valid @RequestBody AlunoUpdateDTO alunoUpdateDTO) {
+        return new ResponseEntity<>(alunoService.update(alunoUpdateDTO), HttpStatus.OK);
     }
 
 

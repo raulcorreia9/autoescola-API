@@ -14,11 +14,12 @@ public class AlunoUpdateDTO {
     @Positive
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "o campo nome precisa ser informado")
     private String nome;
 
     private String matricula;
 
-    @NotBlank
+    @NotBlank(message = "o campo email precisa ser informado")
+    @Email(message = "o campo email precisa ser válido")
     private String email;
 }

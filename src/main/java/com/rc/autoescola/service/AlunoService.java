@@ -1,6 +1,6 @@
 package com.rc.autoescola.service;
 
-import com.rc.autoescola.DTO.AlunoDTO;
+import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
@@ -12,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -42,15 +44,26 @@ public class AlunoService {
     }
 
     public Aluno update(AlunoUpdateDTO alunoUpdateDTO) {
-        findById(alunoUpdateDTO.getId());
+        Aluno alunoSaved = findById(alunoUpdateDTO.getId());
         Aluno alunoToUpdate = modelMapper.map(alunoUpdateDTO, Aluno.class);
+        alunoToUpdate.setMatricula(alunoSaved.getMatricula());
+
         return alunoRepository.save(alunoToUpdate);
     }
 
     @Transactional
-    public Aluno save(AlunoDTO alunoDTO) {
-        Aluno aluno = modelMapper.map(alunoDTO, Aluno.class);
+    public Aluno save(AlunoCreateDTO alunoCreateDTO) {
+        Aluno aluno = modelMapper.map(alunoCreateDTO, Aluno.class);
+        aluno.setMatricula(generateMatriculaAluno());
         return alunoRepository.save(aluno);
+    }
+
+    //Utils
+    private String generateMatriculaAluno() {
+        //Formato da matrícula: Ano atual + 6 dígitos aleatorios
+        int year = LocalDate.now().getYear();
+        String randomDigits = String.format("%06d", new Random().nextInt(999999));
+        return year + randomDigits;
     }
 
 }
