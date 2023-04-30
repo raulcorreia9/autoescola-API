@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorResponseDetails {
-    private int status;
+    private String fields;
     private String message;
-    private LocalDateTime timestamp;
+    private int status;
+    private String developerMessage;
 }
