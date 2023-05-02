@@ -36,8 +36,13 @@ public class AlunoController {
     }
 
     @GetMapping("/nome")
-    public ResponseEntity<List<Aluno>> findById(@RequestParam String nome) {
+    public ResponseEntity<List<Aluno>> findByNome(@RequestParam String nome) {
         return ResponseEntity.ok(alunoService.findByName(nome));
+    }
+
+    @GetMapping("/matricula")
+    public ResponseEntity<Aluno> findByMatricula(@RequestParam String matricula) {
+        return ResponseEntity.ok(alunoService.findByMatricula(matricula));
     }
 
     @PostMapping

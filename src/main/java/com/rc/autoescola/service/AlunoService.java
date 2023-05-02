@@ -39,8 +39,20 @@ public class AlunoService {
         return alunoRepository.findAlunoByNomeContainingIgnoreCase(nome);
     }
 
+    public Aluno findByMatricula(String matricula) {
+        return alunoRepository.findAlunoByMatricula(matricula)
+                .orElseThrow(() -> new NotFoundException("Aluno não encontrado"));
+    }
+
     public void delete(Long id) {
        alunoRepository.delete(findById(id));
+    }
+
+    @Transactional
+    public Aluno save(AlunoCreateDTO alunoCreateDTO) {
+        Aluno aluno = modelMapper.map(alunoCreateDTO, Aluno.class);
+        aluno.setMatricula(generateMatriculaAluno());
+        return alunoRepository.save(aluno);
     }
 
     public Aluno update(AlunoUpdateDTO alunoUpdateDTO) {
@@ -49,13 +61,6 @@ public class AlunoService {
         alunoToUpdate.setMatricula(alunoSaved.getMatricula());
 
         return alunoRepository.save(alunoToUpdate);
-    }
-
-    @Transactional
-    public Aluno save(AlunoCreateDTO alunoCreateDTO) {
-        Aluno aluno = modelMapper.map(alunoCreateDTO, Aluno.class);
-        aluno.setMatricula(generateMatriculaAluno());
-        return alunoRepository.save(aluno);
     }
 
     //Utils

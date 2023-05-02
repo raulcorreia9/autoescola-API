@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
@@ -13,4 +14,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     List<Aluno> findAlunoByNome(String nome);
 
     List<Aluno> findAlunoByNomeContainingIgnoreCase(String nome);
+
+    Optional<Aluno> findAlunoByMatricula(String matricula);
 }
