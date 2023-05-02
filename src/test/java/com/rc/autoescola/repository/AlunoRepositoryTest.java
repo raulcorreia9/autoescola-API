@@ -106,11 +106,12 @@ class AlunoRepositoryTest {
         Aluno alunoToBeSaved = AlunoCreator.createAlunoToBeSaved();
 
         Aluno alunoSaved = alunoRepository.save(alunoToBeSaved);
+        Long id = alunoSaved.getId();
 
-        Optional<Aluno> alunos = alunoRepository.findById(alunoSaved.getId());
+        Optional<Aluno> aluno = alunoRepository.findById(id);
 
-        Assertions.assertThat(alunos).isNotEmpty().isNotNull();
-        Assertions.assertThat(alunos).contains(alunoSaved);
+        Assertions.assertThat(aluno).isNotEmpty().isNotNull();
+        Assertions.assertThat(aluno.get().getId()).isEqualTo(id);
 
     }
 
@@ -120,6 +121,21 @@ class AlunoRepositoryTest {
         Optional<Aluno> aluno = alunoRepository.findById(1L);
 
         Assertions.assertThat(aluno).isNotNull().isEmpty();
+    }
+
+    @Test
+    @DisplayName("Find By matrícula retorna um Aluno quando ocorrer sucesso")
+    void findByMatricula_ReturnsAnAluno_WhenAlunoAreFound() {
+        Aluno alunoToBeSaved = AlunoCreator.createAlunoToBeSaved();
+
+        Aluno alunoSaved = alunoRepository.save(alunoToBeSaved);
+        String matricula = alunoSaved.getMatricula();
+
+        Optional<Aluno> aluno = alunoRepository.findAlunoByMatricula(matricula);
+
+        Assertions.assertThat(aluno).isNotEmpty().isNotNull();
+        Assertions.assertThat(aluno.get().getMatricula()).isEqualTo(matricula);
+
     }
 
     /*
