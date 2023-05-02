@@ -22,6 +22,7 @@ public class Aluno {
     @NotBlank(message = "o campo nome precisa ser informado")
     private String nome;
 
+    @Column(unique = true)
     private String matricula;
 
     @NotEmpty
