@@ -85,7 +85,7 @@ class AlunoRepositoryTest {
 
         Aluno alunoSaved = alunoRepository.save(alunoToBeSaved);
 
-        List<Aluno> alunos = alunoRepository.findAlunoByNome(nome);
+        List<Aluno> alunos = alunoRepository.findAlunoByNomeContainingIgnoreCase(nome);
 
         Assertions.assertThat(alunos).isNotEmpty().hasSize(1).isNotNull();
         Assertions.assertThat(alunos).contains(alunoSaved);
@@ -95,7 +95,7 @@ class AlunoRepositoryTest {
     @Test
     @DisplayName("Find Aluno By Nome retorna uma lista vazia de Alunos quando nenhum aluno for encontrado")
     void findAlunoByNome_ReturnsEmptyListOfAluno_WhenNoAlunoAreFound() {
-        List<Aluno> alunos = alunoRepository.findAlunoByNome("nobody");
+        List<Aluno> alunos = alunoRepository.findAlunoByNomeContainingIgnoreCase("nobody");
         Assertions.assertThat(alunos).isNotNull().isEmpty();
     }
 

@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM aluno a WHERE a.nome LIKE %:nome% ")
-    List<Aluno> findAlunoByNome(String nome);
+//    @Query(nativeQuery = true, value = "SELECT * FROM aluno a WHERE a.nome LIKE %:nome% ")
+//    List<Aluno> findAlunoByNome(String nome);
 
     List<Aluno> findAlunoByNomeContainingIgnoreCase(String nome);
 
