@@ -55,6 +55,23 @@ class AlunoRepositoryTest {
     }
 
     @Test
+    @DisplayName("Update atualiza um aluno quando ocorrer sucesso")
+    void save_UpdatesAnime_WhenSuccessful(){
+        Aluno alunoToBeSaved = AlunoCreator.createAlunoToBeSaved();
+
+        Aluno alunoSaved = alunoRepository.save(alunoToBeSaved);
+        alunoSaved.setNome("Vinicius");
+
+        Aluno alunoUpdated = alunoRepository.save(alunoSaved);
+
+        Assertions.assertThat(alunoUpdated).isNotNull();
+
+        Assertions.assertThat(alunoUpdated.getId()).isNotNull();
+
+        Assertions.assertThat(alunoUpdated.getNome()).isEqualTo(alunoSaved.getNome());
+    }
+
+    @Test
     @DisplayName("Find All retorna uma lista de Alunos quando ocorrer sucesso")
     void findAll_ReturnsListOfAluno_WhenSuccessful() {
         Aluno alunoToBeSaved = AlunoCreator.createAlunoToBeSaved();
@@ -135,13 +152,21 @@ class AlunoRepositoryTest {
 
         Assertions.assertThat(aluno).isNotEmpty().isNotNull();
         Assertions.assertThat(aluno.get().getMatricula()).isEqualTo(matricula);
-
     }
 
-    /*
-    * DELETE
-    * UPDATE
-    * */
+    @Test
+    @DisplayName("Delete remove um Aluno quando ocorrer sucesso")
+    void delete_RemovesAnAluno_WhenSuccessful() {
+        Aluno alunoToBeSaved = AlunoCreator.createAlunoToBeSaved();
 
+        Aluno alunoSaved = alunoRepository.save(alunoToBeSaved);
+
+        alunoRepository.delete(alunoSaved);
+
+        Optional<Aluno> alunoFounded = alunoRepository.findById(alunoSaved.getId());
+
+        Assertions.assertThat(alunoFounded).isEmpty();
+
+    }
 
 }

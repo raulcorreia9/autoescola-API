@@ -1,11 +1,13 @@
 package com.rc.autoescola.DTO;
 
 
+import lombok.Builder;
 import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@Builder
 public class AlunoCreateDTO {
 
     @NotBlank(message = "o campo nome precisa ser informado")

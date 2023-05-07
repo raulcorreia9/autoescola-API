@@ -1,5 +1,6 @@
 package com.rc.autoescola.DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
+@Builder
 public class AlunoUpdateDTO {
     @NotBlank
     @NotNull
