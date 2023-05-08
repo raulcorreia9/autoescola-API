@@ -55,12 +55,14 @@ public class AlunoService {
         return alunoRepository.save(aluno);
     }
 
+    @Transactional
     public Aluno update(AlunoUpdateDTO alunoUpdateDTO) {
         Aluno alunoSaved = findById(alunoUpdateDTO.getId());
-        Aluno alunoToUpdate = modelMapper.map(alunoUpdateDTO, Aluno.class);
-        alunoToUpdate.setMatricula(alunoSaved.getMatricula());
 
-        return alunoRepository.save(alunoToUpdate);
+        alunoSaved.setNome(alunoUpdateDTO.getNome() != null ? alunoUpdateDTO.getNome() : alunoSaved.getNome());
+        alunoSaved.setEmail(alunoUpdateDTO.getEmail() != null ? alunoUpdateDTO.getEmail() : alunoSaved.getEmail());
+
+        return alunoRepository.save(alunoSaved);
     }
 
     //Utils

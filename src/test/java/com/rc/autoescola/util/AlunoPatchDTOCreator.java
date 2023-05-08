@@ -1,6 +1,5 @@
 package com.rc.autoescola.util;
 
-import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.models.Aluno;
 
@@ -11,7 +10,6 @@ public class AlunoPatchDTOCreator {
                 .id(validAluno.getId())
                 .nome(validAluno.getNome())
                 .email(validAluno.getEmail())
-                .matricula(validAluno.getMatricula())
                 .build();
     }
 
