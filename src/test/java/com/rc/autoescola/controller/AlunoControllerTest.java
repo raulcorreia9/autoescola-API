@@ -122,14 +122,6 @@ class AlunoControllerTest {
         BDDMockito.when(alunoServiceMock.findById(ArgumentMatchers.anyLong()))
                 .thenThrow(new NotFoundException(message));
 
-//        // when
-//        Throwable throwable = Assertions.catchThrowable(() -> alunoController.findById(1L));
-//
-//        // then
-//        Assertions.assertThat(throwable)
-//                .isInstanceOf(NotFoundException.class)
-//                .hasFieldOrPropertyWithValue("message", message);
-
         Assertions.assertThatExceptionOfType(NotFoundException.class)
                 .isThrownBy(() -> alunoController.findById(1L))
                 .withMessageContaining(message);
@@ -225,12 +217,12 @@ class AlunoControllerTest {
 
     @Test
     @DisplayName("Update atualiza um Aluno quando ocorrer sucesso")
-    void update_UpdatesAluno_WhenSuccessful() {
+     void update_UpdatesAluno_WhenSuccessful() {
         AlunoUpdateDTO alunoPatchDTO = AlunoPatchDTOCreator.createAlunoPatchDTO();
 
         Aluno alunoUpdated = alunoController.update(alunoPatchDTO).getBody();
 
-        System.out.println(alunoUpdated);
+        System.out.println(alunoUpdated.getMatricula());
 
         Assertions.assertThat(alunoUpdated).isNotNull();
         Assertions.assertThat(alunoUpdated.getId()).isNotNull();
