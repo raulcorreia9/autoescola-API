@@ -222,8 +222,6 @@ class AlunoControllerTest {
 
         Aluno alunoUpdated = alunoController.update(alunoPatchDTO).getBody();
 
-        System.out.println(alunoUpdated.getMatricula());
-
         Assertions.assertThat(alunoUpdated).isNotNull();
         Assertions.assertThat(alunoUpdated.getId()).isNotNull();
         Assertions.assertThat(alunoUpdated.getMatricula().length()).isEqualTo(10);

@@ -24,6 +24,8 @@ public class AlunoService {
     private final ModelMapper modelMapper;
 
     public List<Aluno> findAll() {
+//        List<Aluno> alunos = alunoRepository.findAll();
+//        return alunos.stream().map(aluno -> new AlunoMinDTO(aluno)).toList();
         return alunoRepository.findAll();
     }
 

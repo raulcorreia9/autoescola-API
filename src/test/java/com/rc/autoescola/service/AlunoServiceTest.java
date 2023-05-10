@@ -1,10 +1,12 @@
 package com.rc.autoescola.service;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
+import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.repository.AlunoRepository;
 import com.rc.autoescola.util.AlunoCreator;
+import com.rc.autoescola.util.AlunoPatchDTOCreator;
 import com.rc.autoescola.util.AlunoPostDTOCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -59,8 +62,10 @@ class AlunoServiceTest {
         BDDMockito.when(modelMapperMock.map(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(AlunoCreator.createValidAluno());
 
-        BDDMockito.when(alunoRepositoryMock.save(ArgumentMatchers.any()))
+        BDDMockito.when(alunoRepositoryMock.save(ArgumentMatchers.any(Aluno.class)))
                 .thenReturn(AlunoCreator.createValidAluno());
+
+        BDDMockito.doNothing().when(alunoRepositoryMock).delete(ArgumentMatchers.any(Aluno.class));
 
     }
 
@@ -178,9 +183,26 @@ class AlunoServiceTest {
         Assertions.assertThat(alunoSaved).isEqualTo(AlunoCreator.createValidAluno());
     }
 
-    /*
-    * UPDATE
-    * DELETE
-    * */
+    @Test
+    @DisplayName("Update atualiza um Aluno quando ocorrer sucesso")
+    void update_UpdatesAluno_WhenSuccessful() {
+
+        AlunoUpdateDTO alunoPatchDTO = AlunoPatchDTOCreator.createAlunoPatchDTO();
+
+        Aluno alunoUpdated = alunoService.update(alunoPatchDTO);
+
+        Assertions.assertThat(alunoUpdated).isNotNull();
+        Assertions.assertThat(alunoUpdated.getId()).isNotNull();
+        Assertions.assertThat(alunoUpdated.getMatricula().length()).isEqualTo(10);
+        Assertions.assertThat(alunoUpdated).isEqualTo(AlunoCreator.createValidAluno());
+
+        Assertions.assertThatCode(() ->alunoService.update(alunoPatchDTO)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("Delete remove Aluno quando ocorrer sucesso")
+    void delete_RemovesAluno_WhenSuccessful() {
+        Assertions.assertThatCode(() -> alunoService.delete(1L)).doesNotThrowAnyException();
+    }
 
 }
