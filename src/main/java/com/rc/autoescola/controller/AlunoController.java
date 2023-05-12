@@ -56,7 +56,7 @@ public class AlunoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<Aluno> update(@Valid @RequestBody AlunoUpdateDTO alunoUpdateDTO) {
         return new ResponseEntity<>(alunoService.update(alunoUpdateDTO), HttpStatus.OK);
     }

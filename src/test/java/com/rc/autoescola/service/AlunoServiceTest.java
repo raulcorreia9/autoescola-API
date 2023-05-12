@@ -173,7 +173,6 @@ class AlunoServiceTest {
     @DisplayName("Save persiste o aluno no banco de dados quando ocorrer sucesso")
     void save_PersistsAluno_WhenSuccessful() {
         AlunoCreateDTO alunoPostDTO = AlunoPostDTOCreator.createAlunoPostDTO();
-        System.out.println(alunoPostDTO);
 
         Aluno alunoSaved = alunoService.save(alunoPostDTO);
 
