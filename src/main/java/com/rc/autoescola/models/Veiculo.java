@@ -1,14 +1,15 @@
 package com.rc.autoescola.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.enums.TipoVeiculo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,15 +22,19 @@ public class Veiculo {
     private Long id;
 
     @Column(unique = true)
-    String placa;
+    private String placa;
 
-    String cor;
+    private String cor;
 
-    String modelo;
+    private String modelo;
 
-    Integer ano;
+    private Integer ano;
 
     @Enumerated
-    TipoVeiculo tipoVeiculo;
+    private TipoVeiculo tipoVeiculo;
+
+    @OneToMany(mappedBy = "veiculo")
+    @JsonIgnore
+    private Set<Aluno> alunos;
 
 }

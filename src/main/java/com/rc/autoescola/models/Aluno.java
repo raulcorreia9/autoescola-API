@@ -28,4 +28,8 @@ public class Aluno {
     @NotEmpty
     @Column(unique = true)
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "veiculoId", nullable = true)
+    private Veiculo veiculo;
 }
