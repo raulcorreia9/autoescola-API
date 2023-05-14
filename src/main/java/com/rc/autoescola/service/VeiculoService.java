@@ -52,7 +52,12 @@ public class VeiculoService {
     @Transactional
     public Veiculo update(VeiculoUpdateDTO veiculoUpdateDTO) {
         Veiculo veiculoSaved = findById(veiculoUpdateDTO.getId());
-        BeanUtils.copyProperties(veiculoUpdateDTO, veiculoSaved);
+
+        veiculoSaved.setPlaca(veiculoUpdateDTO.getPlaca() != null ? veiculoUpdateDTO.getPlaca() : veiculoSaved.getPlaca());
+        veiculoSaved.setAno(veiculoUpdateDTO.getAno() != null ? veiculoUpdateDTO.getAno() : veiculoSaved.getAno());
+        veiculoSaved.setCor(veiculoUpdateDTO.getCor() != null ? veiculoUpdateDTO.getCor() : veiculoSaved.getCor());
+        veiculoSaved.setModelo(veiculoUpdateDTO.getModelo() != null ? veiculoUpdateDTO.getModelo() : veiculoSaved.getModelo());
+        veiculoSaved.setTipoVeiculo(veiculoUpdateDTO.getTipoVeiculo() != null ? veiculoUpdateDTO.getTipoVeiculo() : veiculoSaved.getTipoVeiculo());
 
         return veiculoRepository.save(veiculoSaved);
     }
