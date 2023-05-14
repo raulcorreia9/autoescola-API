@@ -1,5 +1,6 @@
 package com.rc.autoescola.DTO;
 
+import com.rc.autoescola.models.Veiculo;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,4 +19,6 @@ public class AlunoUpdateDTO {
 
     @Email
     private String email;
+
+    private Veiculo veiculo;
 }
