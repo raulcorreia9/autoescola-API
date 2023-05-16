@@ -16,4 +16,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     List<Aluno> findAlunoByNomeContainingIgnoreCase(String nome);
 
     Optional<Aluno> findAlunoByMatricula(String matricula);
+
+    @Query(nativeQuery = true, value = "SELECT a.* FROM autoescola.aluno a INNER JOIN autoescola.veiculo v ON a.veiculo_id = v.id AND v.placa = :placa ")
+    List<Aluno> findAllAlunosForVeiculoByPlaca(String placa);
 }

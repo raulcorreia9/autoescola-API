@@ -1,7 +1,6 @@
 package com.rc.autoescola.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.enums.TipoVeiculo;
 import lombok.*;
 

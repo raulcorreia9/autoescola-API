@@ -50,6 +50,10 @@ public class AlunoService {
                 .orElseThrow(() -> new NotFoundException("Aluno não encontrado"));
     }
 
+    public List<Aluno> findAllAlunosForVeiculoByPlaca(String placa) {
+        return alunoRepository.findAllAlunosForVeiculoByPlaca(placa);
+    }
+
     public void delete(Long id) {
        alunoRepository.delete(findById(id));
     }

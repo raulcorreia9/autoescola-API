@@ -1,10 +1,10 @@
 package com.rc.autoescola.controller;
 
-import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.DTO.VeiculoUpdateDTO;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.models.Veiculo;
+import com.rc.autoescola.service.AlunoService;
 import com.rc.autoescola.service.VeiculoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/api/veiculo")
 public class VeiculoController {
     private final VeiculoService veiculoService;
+    private final AlunoService alunoService;
 
     @PostMapping
     public ResponseEntity<Veiculo> save(@RequestBody @Valid VeiculoCreateDTO veiculoCreateDTO) {
@@ -38,13 +39,18 @@ public class VeiculoController {
     }
 
     @GetMapping("/placa")
-    public ResponseEntity<Veiculo> findByMatricula(@RequestParam String placa) {
+    public ResponseEntity<Veiculo> findByPlaca(@RequestParam String placa) {
         return ResponseEntity.ok(veiculoService.findByPlaca(placa));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Veiculo> findById(@PathVariable Long id) {
         return ResponseEntity.ok(veiculoService.findById(id));
+    }
+
+    @GetMapping("/placa/{placa}")
+    public ResponseEntity<List<Aluno>> findAllAlunosForVeiculoByPlaca(@PathVariable String placa) {
+        return ResponseEntity.ok(alunoService.findAllAlunosForVeiculoByPlaca(placa));
     }
 
     @DeleteMapping("/{id}")
