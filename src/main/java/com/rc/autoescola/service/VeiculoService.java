@@ -45,6 +45,7 @@ public class VeiculoService {
         return veiculoRepository.findById(id).orElseThrow(() -> new NotFoundException("Veículo não encontrado."));
     }
 
+    @Transactional
     public void delete(Long id) {
         veiculoRepository.delete(findById(id));
     }

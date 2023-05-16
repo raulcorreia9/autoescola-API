@@ -3,17 +3,16 @@ package com.rc.autoescola.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.enums.TipoVeiculo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 public class Veiculo {
@@ -37,4 +36,25 @@ public class Veiculo {
     @JsonIgnore
     private Set<Aluno> alunos;
 
+    @PreRemove
+    public void setVeiculoAsNullOnRemove() {
+        for (Aluno aluno : getAlunos()) {
+            if (aluno.getVeiculo() != null && aluno.getVeiculo().equals(this)) {
+                aluno.setVeiculo(null);
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Veiculo veiculo = (Veiculo) o;
+        return Objects.equals(id, veiculo.id) && Objects.equals(placa, veiculo.placa) && Objects.equals(cor, veiculo.cor) && Objects.equals(modelo, veiculo.modelo) && Objects.equals(ano, veiculo.ano) && tipoVeiculo == veiculo.tipoVeiculo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, placa, cor, modelo, ano, tipoVeiculo);
+    }
 }
