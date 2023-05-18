@@ -1,5 +1,6 @@
 package com.rc.autoescola.controller;
 
+import com.rc.autoescola.DTO.AlunoSimpleDTO;
 import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.DTO.VeiculoUpdateDTO;
 import com.rc.autoescola.models.Aluno;
@@ -49,7 +50,7 @@ public class VeiculoController {
     }
 
     @GetMapping("/placa/{placa}")
-    public ResponseEntity<List<Aluno>> findAllAlunosForVeiculoByPlaca(@PathVariable String placa) {
+    public ResponseEntity<List<AlunoSimpleDTO>> findAllAlunosForVeiculoByPlaca(@PathVariable String placa) {
         return ResponseEntity.ok(alunoService.findAllAlunosForVeiculoByPlaca(placa));
     }
 

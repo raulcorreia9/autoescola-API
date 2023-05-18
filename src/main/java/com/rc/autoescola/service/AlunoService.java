@@ -1,6 +1,7 @@
 package com.rc.autoescola.service;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
+import com.rc.autoescola.DTO.AlunoSimpleDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,8 +52,9 @@ public class AlunoService {
                 .orElseThrow(() -> new NotFoundException("Aluno não encontrado"));
     }
 
-    public List<Aluno> findAllAlunosForVeiculoByPlaca(String placa) {
-        return alunoRepository.findAllAlunosForVeiculoByPlaca(placa);
+    public List<AlunoSimpleDTO> findAllAlunosForVeiculoByPlaca(String placa) {
+        List<Aluno> alunos = alunoRepository.findAllAlunosForVeiculoByPlaca(placa);
+        return alunos.stream().map(AlunoSimpleDTO::new).collect(Collectors.toList());
     }
 
     public void delete(Long id) {
