@@ -7,9 +7,9 @@ spring:
     url: jdbc:mysql://localhost:3306/autoescola?createDatabaseIfNotExist=true
     username: root
     password: root
-  jpa:
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
 
 
 logging:
