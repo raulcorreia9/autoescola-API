@@ -5,7 +5,6 @@ import com.rc.autoescola.enums.TipoVeiculo;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -13,13 +12,16 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(unique = true)
+    @EqualsAndHashCode.Include
     private String placa;
 
     private String cor;
@@ -29,6 +31,7 @@ public class Veiculo {
     private Integer ano;
 
     @Enumerated(EnumType.STRING)
+    @EqualsAndHashCode.Include
     private TipoVeiculo tipoVeiculo;
 
     @OneToMany(mappedBy = "veiculo")
@@ -42,31 +45,5 @@ public class Veiculo {
                 aluno.setVeiculo(null);
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Veiculo veiculo = (Veiculo) o;
-        return Objects.equals(id, veiculo.id) && Objects.equals(placa, veiculo.placa) && Objects.equals(cor, veiculo.cor) && Objects.equals(modelo, veiculo.modelo) && Objects.equals(ano, veiculo.ano) && tipoVeiculo == veiculo.tipoVeiculo;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, placa, cor, modelo, ano, tipoVeiculo);
-    }
-
-    @Override
-    public String toString() {
-        return "Veiculo{" +
-                "id=" + id +
-                ", placa='" + placa + '\'' +
-                ", cor='" + cor + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", ano=" + ano +
-                ", tipoVeiculo=" + tipoVeiculo +
-                ", alunos=" + alunos +
-                '}';
     }
 }
