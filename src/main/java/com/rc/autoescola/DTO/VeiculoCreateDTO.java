@@ -10,17 +10,21 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
 public class VeiculoCreateDTO {
     @NotBlank(message = "A placa do veículo deve ser informada")
+    @Size(max = 8, min = 7, message = "A placa deve ter no máximo 8 e no mínimo 7 caracteres")
     String placa;
 
     @NotBlank(message = "A cor do veículo deve ser informada")
+    @Size(max = 20, message = "A cor do veículo deve ter no máximo 20 caracteres")
     String cor;
 
     @NotBlank(message = "O modelo deve ser informado")
+    @Size(max = 60)
     String modelo;
 
     @NotNull
