@@ -22,6 +22,7 @@ public class VeiculoUpdateDTO {
 
     String modelo;
 
+    @Min(value = 2000, message = "O ano do veículo deve ser igual ou superior a 2000")
     Integer ano;
 
     @Enumerated(EnumType.STRING)

@@ -28,7 +28,7 @@ public class Veiculo {
 
     private Integer ano;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TipoVeiculo tipoVeiculo;
 
     @OneToMany(mappedBy = "veiculo")
