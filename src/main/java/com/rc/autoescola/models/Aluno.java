@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.util.Random;
 
 @Entity
 @Data
@@ -32,4 +34,11 @@ public class Aluno {
     @ManyToOne
     @JoinColumn(name = "veiculoId", nullable = true)
     private Veiculo veiculo;
+
+    public void generateMatriculaAluno() {
+        //Formato da matrícula: Ano atual + 6 dígitos aleatorios
+        int year = LocalDate.now().getYear();
+        String randomDigits = String.format("%06d", new Random().nextInt(999999));
+        setMatricula(year + randomDigits);
+    }
 }
