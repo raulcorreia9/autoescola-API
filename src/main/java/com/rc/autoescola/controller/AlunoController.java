@@ -1,7 +1,9 @@
 package com.rc.autoescola.controller;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
+import com.rc.autoescola.DTO.AlunoGetDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
+import com.rc.autoescola.assembler.AlunoAssembler;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.service.AlunoService;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +21,12 @@ import java.util.List;
 @RequestMapping(value = "/api/aluno")
 public class AlunoController {
     private final AlunoService alunoService;
+    private final AlunoAssembler alunoAssembler;
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> findAll() {
-        return ResponseEntity.ok(alunoService.findAll());
+    public List<AlunoGetDTO> findAll() {
+        List<Aluno> alunos = alunoService.findAll();
+        return alunoAssembler.toCollectionAlunoGetDTO(alunos);
     }
 
     @GetMapping("/paginated")

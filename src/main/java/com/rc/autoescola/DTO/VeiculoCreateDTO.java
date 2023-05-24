@@ -4,7 +4,6 @@ import com.rc.autoescola.enums.TipoVeiculo;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;

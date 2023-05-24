@@ -1,13 +1,16 @@
 package com.rc.autoescola.controller;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
+import com.rc.autoescola.DTO.AlunoGetDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
+import com.rc.autoescola.assembler.AlunoAssembler;
 import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.service.AlunoService;
 import com.rc.autoescola.util.AlunoCreator;
 import com.rc.autoescola.util.AlunoPatchDTOCreator;
 import com.rc.autoescola.util.AlunoPostDTOCreator;
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,9 +28,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
+@RequiredArgsConstructor
 class AlunoControllerTest {
 
     @InjectMocks
@@ -36,10 +39,14 @@ class AlunoControllerTest {
     @Mock
     private AlunoService alunoServiceMock;
 
+    @Mock
+    private AlunoAssembler alunoAssemblerMock;
+
     @BeforeEach
     void setUp() {
         PageImpl<Aluno> alunoPage = new PageImpl<>(List.of(AlunoCreator.createValidAluno()));
         List<Aluno> alunoList = List.of(AlunoCreator.createValidAluno());
+        List<AlunoGetDTO> alunoGetDTOList = List.of(AlunoCreator.createValidAlunoGetDTO());
 
         BDDMockito.when(alunoServiceMock.findAllPaginated(ArgumentMatchers.any()))
                 .thenReturn(alunoPage);
@@ -63,17 +70,19 @@ class AlunoControllerTest {
 
         BDDMockito.when(alunoServiceMock.update(ArgumentMatchers.any()))
                 .thenReturn(AlunoCreator.createValidAluno());
+
+        BDDMockito.when(alunoAssemblerMock.toCollectionAlunoGetDTO(ArgumentMatchers.any()))
+                .thenReturn(alunoGetDTOList);
     }
 
     @Test
     @DisplayName("Find All retorna uma lista de Alunos quando ocorrer sucesso")
     void findAll_ReturnsListOfAlunos_WhenSuccessful() {
-        Aluno validAluno = AlunoCreator.createValidAluno();
-        List<Aluno> alunosList = alunoController.findAll().getBody();
+        AlunoGetDTO validAluno = AlunoCreator.createValidAlunoGetDTO();
+        List<AlunoGetDTO> alunosList = alunoController.findAll();
 
         Assertions.assertThat(alunosList).isNotNull();
         Assertions.assertThat(alunosList).isNotEmpty().hasSize(1);
-        Assertions.assertThat(alunosList).contains(validAluno);
         Assertions.assertThat(alunosList.get(0)).isEqualTo(validAluno);
     }
 
@@ -83,7 +92,10 @@ class AlunoControllerTest {
         BDDMockito.when(alunoServiceMock.findAll())
                 .thenReturn(List.of());
 
-        List<Aluno> alunosList = alunoController.findAll().getBody();
+        BDDMockito.when(alunoAssemblerMock.toCollectionAlunoGetDTO(ArgumentMatchers.any()))
+                .thenReturn(List.of());
+
+        List<AlunoGetDTO> alunosList = alunoController.findAll();
 
         Assertions.assertThat(alunosList).isNotNull().isEmpty();
     }
