@@ -3,6 +3,7 @@ package com.rc.autoescola.service;
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoSimpleDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
+import com.rc.autoescola.assembler.AlunoAssembler;
 import com.rc.autoescola.exception.NotFoundException;
 import com.rc.autoescola.models.Aluno;
 import com.rc.autoescola.models.Veiculo;
@@ -27,7 +28,7 @@ public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private final VeiculoRepository veiculoRepository;
-    private final ModelMapper modelMapper;
+    private final AlunoAssembler alunoAssembler;
 
     public List<Aluno> findAll() {
 //        List<Aluno> alunos = alunoRepository.findAll();
@@ -66,7 +67,7 @@ public class AlunoService {
 
         Optional<Veiculo> veiculo = veiculoRepository.findById(alunoCreateDTO.getVeiculo().getId());
 
-        Aluno aluno = modelMapper.map(alunoCreateDTO, Aluno.class);
+        Aluno aluno = alunoAssembler.toEntityFromCreate(alunoCreateDTO);
 
         if(veiculo.isPresent()) {
             aluno.setVeiculo(veiculo.get());
@@ -74,7 +75,7 @@ public class AlunoService {
             throw new NotFoundException("Veículo não encontrado");
         }
 
-        aluno.setMatricula(generateMatriculaAluno());
+        aluno.generateMatriculaAluno();
 
         return alunoRepository.save(aluno);
     }
@@ -88,7 +89,6 @@ public class AlunoService {
 
         if(alunoUpdateDTO.getVeiculo() != null) {
             Optional<Veiculo> veiculo = veiculoRepository.findById(alunoUpdateDTO.getVeiculo().getId());
-
             if(veiculo.isPresent()) {
                 alunoSaved.setVeiculo(veiculo.get());
             } else {
@@ -97,14 +97,6 @@ public class AlunoService {
         }
 
         return alunoRepository.save(alunoSaved);
-    }
-
-    //Utils
-    private String generateMatriculaAluno() {
-        //Formato da matrícula: Ano atual + 6 dígitos aleatorios
-        int year = LocalDate.now().getYear();
-        String randomDigits = String.format("%06d", new Random().nextInt(999999));
-        return year + randomDigits;
     }
 
 }
