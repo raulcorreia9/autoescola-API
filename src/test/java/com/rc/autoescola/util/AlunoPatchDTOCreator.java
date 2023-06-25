@@ -7,7 +7,6 @@ public class AlunoPatchDTOCreator {
     public static AlunoUpdateDTO createAlunoPatchDTO() {
         Aluno validAluno = AlunoCreator.createValidAluno();
         return AlunoUpdateDTO.builder()
-                .id(validAluno.getId())
                 .nome(validAluno.getNome())
                 .email(validAluno.getEmail())
                 .build();
