@@ -1,4 +1,4 @@
-package com.rc.autoescola.models;
+package com.rc.autoescola.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rc.autoescola.enums.TipoVeiculo;
@@ -9,19 +9,18 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Veiculo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
 
     @Column(unique = true)
-    @EqualsAndHashCode.Include
     private String placa;
 
     private String cor;
@@ -31,7 +30,6 @@ public class Veiculo {
     private Integer ano;
 
     @Enumerated(EnumType.STRING)
-    @EqualsAndHashCode.Include
     private TipoVeiculo tipoVeiculo;
 
     @OneToMany(mappedBy = "veiculo")

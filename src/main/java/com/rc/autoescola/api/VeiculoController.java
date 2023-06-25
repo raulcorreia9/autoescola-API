@@ -1,12 +1,11 @@
-package com.rc.autoescola.controller;
+package com.rc.autoescola.api;
 
 import com.rc.autoescola.DTO.AlunoSimpleDTO;
 import com.rc.autoescola.DTO.VeiculoCreateDTO;
 import com.rc.autoescola.DTO.VeiculoUpdateDTO;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.models.Veiculo;
-import com.rc.autoescola.service.AlunoService;
-import com.rc.autoescola.service.VeiculoService;
+import com.rc.autoescola.domain.models.Veiculo;
+import com.rc.autoescola.domain.service.AlunoService;
+import com.rc.autoescola.domain.service.VeiculoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,12 +56,14 @@ public class VeiculoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         veiculoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Veiculo> update(@Valid @RequestBody VeiculoUpdateDTO veiculoUpdateDTO) {
-        return new ResponseEntity<>(veiculoService.update(veiculoUpdateDTO), HttpStatus.OK);
+    @PutMapping("/{veiculoId}")
+    public ResponseEntity<Veiculo> update(@Valid @RequestBody VeiculoUpdateDTO veiculoUpdateDTO,
+                                          @PathVariable Long veiculoId) {
+        return ResponseEntity.ok(veiculoService.update(veiculoUpdateDTO, veiculoId));
     }
 
 }

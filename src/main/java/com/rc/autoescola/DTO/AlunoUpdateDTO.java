@@ -1,6 +1,6 @@
 package com.rc.autoescola.DTO;
 
-import com.rc.autoescola.models.Veiculo;
+import com.rc.autoescola.domain.models.Veiculo;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,9 +12,6 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 public class AlunoUpdateDTO {
-    @NotNull
-    @Positive
-    private Long id;
 
     @Size(max = 60)
     private String nome;

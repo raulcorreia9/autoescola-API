@@ -3,7 +3,7 @@ package com.rc.autoescola.assembler;
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoGetDTO;
 import com.rc.autoescola.DTO.AlunoSimpleDTO;
-import com.rc.autoescola.models.Aluno;
+import com.rc.autoescola.domain.models.Aluno;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

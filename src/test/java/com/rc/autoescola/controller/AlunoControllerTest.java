@@ -3,10 +3,11 @@ package com.rc.autoescola.controller;
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoGetDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
+import com.rc.autoescola.api.AlunoController;
 import com.rc.autoescola.assembler.AlunoAssembler;
 import com.rc.autoescola.exception.NotFoundException;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.service.AlunoService;
+import com.rc.autoescola.domain.models.Aluno;
+import com.rc.autoescola.domain.service.AlunoService;
 import com.rc.autoescola.util.AlunoCreator;
 import com.rc.autoescola.util.AlunoPatchDTOCreator;
 import com.rc.autoescola.util.AlunoPostDTOCreator;
@@ -68,7 +69,7 @@ class AlunoControllerTest {
 
         BDDMockito.doNothing().when(alunoServiceMock).delete(ArgumentMatchers.anyLong());
 
-        BDDMockito.when(alunoServiceMock.update(ArgumentMatchers.any()))
+        BDDMockito.when(alunoServiceMock.update(ArgumentMatchers.any(), ArgumentMatchers.anyLong()))
                 .thenReturn(AlunoCreator.createValidAluno());
 
         BDDMockito.when(alunoAssemblerMock.toCollectionAlunoGetDTO(ArgumentMatchers.any()))
@@ -232,7 +233,7 @@ class AlunoControllerTest {
      void update_UpdatesAluno_WhenSuccessful() {
         AlunoUpdateDTO alunoPatchDTO = AlunoPatchDTOCreator.createAlunoPatchDTO();
 
-        Aluno alunoUpdated = alunoController.update(alunoPatchDTO).getBody();
+        Aluno alunoUpdated = alunoController.update(alunoPatchDTO, 1L).getBody();
 
         Assertions.assertThat(alunoUpdated).isNotNull();
         Assertions.assertThat(alunoUpdated.getId()).isNotNull();

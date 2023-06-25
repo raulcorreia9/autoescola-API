@@ -11,9 +11,6 @@ import javax.validation.constraints.*;
 @Data
 @Builder
 public class VeiculoUpdateDTO {
-    @NotNull
-    @Positive
-    private Long id;
 
 //    @Pattern(regexp = "[A-Z]{3}-[0-9]{4}", message = "A placa deve ter o formato AAA-1234")
     @Size(max = 8, min = 7, message = "A placa deve ter no máximo 8 e no mínimo 7 caracteres")

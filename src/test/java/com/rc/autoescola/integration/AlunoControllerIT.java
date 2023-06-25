@@ -1,17 +1,13 @@
 package com.rc.autoescola.integration;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
-import com.rc.autoescola.DTO.AlunoUpdateDTO;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.repository.AlunoRepository;
+import com.rc.autoescola.domain.models.Aluno;
+import com.rc.autoescola.domain.repository.AlunoRepository;
 import com.rc.autoescola.util.AlunoCreator;
-import com.rc.autoescola.util.AlunoPatchDTOCreator;
 import com.rc.autoescola.util.AlunoPostDTOCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;

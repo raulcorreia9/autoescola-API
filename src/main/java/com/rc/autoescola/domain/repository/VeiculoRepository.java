@@ -1,10 +1,9 @@
-package com.rc.autoescola.repository;
+package com.rc.autoescola.domain.repository;
 
-import com.rc.autoescola.models.Veiculo;
+import com.rc.autoescola.domain.models.Veiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

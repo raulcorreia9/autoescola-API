@@ -1,6 +1,6 @@
 package com.rc.autoescola.DTO;
 
-import com.rc.autoescola.models.Veiculo;
+import com.rc.autoescola.domain.models.Veiculo;
 import lombok.*;
 
 @Getter

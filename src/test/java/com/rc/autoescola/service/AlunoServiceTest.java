@@ -2,9 +2,10 @@ package com.rc.autoescola.service;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
+import com.rc.autoescola.domain.service.AlunoService;
 import com.rc.autoescola.exception.NotFoundException;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.repository.AlunoRepository;
+import com.rc.autoescola.domain.models.Aluno;
+import com.rc.autoescola.domain.repository.AlunoRepository;
 import com.rc.autoescola.util.AlunoCreator;
 import com.rc.autoescola.util.AlunoPatchDTOCreator;
 import com.rc.autoescola.util.AlunoPostDTOCreator;
@@ -21,14 +22,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 class AlunoServiceTest {
     @InjectMocks
@@ -188,14 +186,14 @@ class AlunoServiceTest {
 
         AlunoUpdateDTO alunoPatchDTO = AlunoPatchDTOCreator.createAlunoPatchDTO();
 
-        Aluno alunoUpdated = alunoService.update(alunoPatchDTO);
+        Aluno alunoUpdated = alunoService.update(alunoPatchDTO, 1L);
 
         Assertions.assertThat(alunoUpdated).isNotNull();
         Assertions.assertThat(alunoUpdated.getId()).isNotNull();
         Assertions.assertThat(alunoUpdated.getMatricula().length()).isEqualTo(10);
         Assertions.assertThat(alunoUpdated).isEqualTo(AlunoCreator.createValidAluno());
 
-        Assertions.assertThatCode(() ->alunoService.update(alunoPatchDTO)).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> alunoService.update(alunoPatchDTO, 1L)).doesNotThrowAnyException();
     }
 
     @Test

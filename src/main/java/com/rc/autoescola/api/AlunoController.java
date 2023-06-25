@@ -1,11 +1,11 @@
-package com.rc.autoescola.controller;
+package com.rc.autoescola.api;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoGetDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.assembler.AlunoAssembler;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.service.AlunoService;
+import com.rc.autoescola.domain.models.Aluno;
+import com.rc.autoescola.domain.service.AlunoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,22 +57,12 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         alunoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Aluno> update(@Valid @RequestBody AlunoUpdateDTO alunoUpdateDTO) {
-        return new ResponseEntity<>(alunoService.update(alunoUpdateDTO), HttpStatus.OK);
+    @PutMapping("/{alunoId}")
+    public ResponseEntity<Aluno> update(@Valid @RequestBody AlunoUpdateDTO alunoUpdateDTO,
+                                        @PathVariable Long alunoId) {
+        return ResponseEntity.ok(alunoService.update(alunoUpdateDTO, alunoId));
     }
-
-
-    //    @ExceptionHandler(NotFoundException.class)
-    //    public ResponseEntity<ErrorResponseDetails> handleAlunoNaotFoundException(NotFoundException ex) {
-    //        ErrorResponseDetails error = ErrorResponseDetails.builder()
-    //                .status(HttpStatus.NOT_FOUND.value())
-    //                .message(ex.getMessage())
-    //                .timestamp(LocalDateTime.now())
-    //                .build();
-    //        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    //    }
 }

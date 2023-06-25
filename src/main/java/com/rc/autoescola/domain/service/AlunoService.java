@@ -1,25 +1,22 @@
-package com.rc.autoescola.service;
+package com.rc.autoescola.domain.service;
 
 import com.rc.autoescola.DTO.AlunoCreateDTO;
 import com.rc.autoescola.DTO.AlunoSimpleDTO;
 import com.rc.autoescola.DTO.AlunoUpdateDTO;
 import com.rc.autoescola.assembler.AlunoAssembler;
+import com.rc.autoescola.domain.models.Veiculo;
+import com.rc.autoescola.domain.repository.AlunoRepository;
+import com.rc.autoescola.domain.repository.VeiculoRepository;
 import com.rc.autoescola.exception.NotFoundException;
-import com.rc.autoescola.models.Aluno;
-import com.rc.autoescola.models.Veiculo;
-import com.rc.autoescola.repository.AlunoRepository;
-import com.rc.autoescola.repository.VeiculoRepository;
+import com.rc.autoescola.domain.models.Aluno;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,15 +62,17 @@ public class AlunoService {
     @Transactional
     public Aluno save(AlunoCreateDTO alunoCreateDTO) {
 
-        Optional<Veiculo> veiculo = veiculoRepository.findById(alunoCreateDTO.getVeiculo().getId());
+        if(alunoCreateDTO.getVeiculo() != null) {
+            Optional<Veiculo> veiculo = veiculoRepository.findById(alunoCreateDTO.getVeiculo().getId());
+
+            if(veiculo.isPresent()) {
+                alunoCreateDTO.setVeiculo(veiculo.get());
+            } else {
+                throw new NotFoundException("Veículo não encontrado");
+            }
+        }
 
         Aluno aluno = alunoAssembler.toEntityFromCreate(alunoCreateDTO);
-
-        if(veiculo.isPresent()) {
-            aluno.setVeiculo(veiculo.get());
-        } else {
-            throw new NotFoundException("Veículo não encontrado");
-        }
 
         aluno.generateMatriculaAluno();
 
@@ -81,8 +80,8 @@ public class AlunoService {
     }
 
     @Transactional
-    public Aluno update(AlunoUpdateDTO alunoUpdateDTO) {
-        Aluno alunoSaved = findById(alunoUpdateDTO.getId());
+    public Aluno update(AlunoUpdateDTO alunoUpdateDTO, Long alunoId) {
+        Aluno alunoSaved = findById(alunoId);
 
         alunoSaved.setNome(alunoUpdateDTO.getNome() != null ? alunoUpdateDTO.getNome() : alunoSaved.getNome());
         alunoSaved.setEmail(alunoUpdateDTO.getEmail() != null ? alunoUpdateDTO.getEmail() : alunoSaved.getEmail());

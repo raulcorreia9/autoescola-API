@@ -1,6 +1,7 @@
 package com.rc.autoescola.repository;
 
-import com.rc.autoescola.models.Aluno;
+import com.rc.autoescola.domain.models.Aluno;
+import com.rc.autoescola.domain.repository.AlunoRepository;
 import com.rc.autoescola.util.AlunoCreator;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;

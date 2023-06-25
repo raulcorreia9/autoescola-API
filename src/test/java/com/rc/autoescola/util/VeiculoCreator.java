@@ -1,7 +1,7 @@
 package com.rc.autoescola.util;
 
 import com.rc.autoescola.enums.TipoVeiculo;
-import com.rc.autoescola.models.Veiculo;
+import com.rc.autoescola.domain.models.Veiculo;
 
 public class VeiculoCreator {
 
