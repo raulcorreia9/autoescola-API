@@ -26,6 +26,10 @@ public class Instrutor {
 
     private String cpf;
 
+    @Embedded
+    @JsonIgnore
+    private Endereco endereco;
+
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "instrutor_veiculo",
