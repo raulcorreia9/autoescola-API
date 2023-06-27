@@ -21,7 +21,7 @@ public class CadastroInstrutorService {
 
     public void remover(Long instrutorId) {
         try {
-            instrutorRepository.findById(instrutorId);
+            instrutorRepository.deleteById(instrutorId);
         }catch(EmptyResultDataAccessException ex) {
             throw new NotFoundException(String.format("Não foi encontrado instrutor com o ID = %d", instrutorId));
         }
