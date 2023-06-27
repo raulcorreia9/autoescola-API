@@ -36,4 +36,8 @@ public class Instrutor {
             joinColumns = @JoinColumn(name = "instrutor_id"),
             inverseJoinColumns = @JoinColumn(name = "veiculo_id"))
     private List<Veiculo> veiculos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "instrutor")
+    @JsonIgnore
+    private List<Aluno> alunos = new ArrayList<>();
 }

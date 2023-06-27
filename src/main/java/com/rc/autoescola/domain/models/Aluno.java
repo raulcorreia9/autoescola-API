@@ -1,5 +1,6 @@
 package com.rc.autoescola.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,8 +33,12 @@ public class Aluno {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "veiculoId", nullable = true)
+    @JoinColumn(name = "veiculo_id", nullable = true)
     private Veiculo veiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "instrutor_id", nullable = true)
+    private Instrutor instrutor;
 
     public void generateMatriculaAluno() {
         //Formato da matrícula: Ano atual + 6 dígitos aleatorios
